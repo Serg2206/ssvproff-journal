@@ -1,10 +1,64 @@
 generator client {
-    provider = "prisma-client-js"
-    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
-    output = "/home/ubuntu/ssvproff_journal/nextjs_space/node_modules/.prisma/client"
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String
+  role          String    @default("reader") // admin, author, reviewer, reader
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  articles      Article[]
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  summary     String
+  content     String
+  date        DateTime
+  doi         String   @default("")
+  institution String   @default("")
+  imageUrl    String   @default("")
+  views       Int      @default(0)
+  downloads   Int      @default(0)
+  citations   Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  authorId    String?
+  author      User?    @relation(fields: [authorId], references: [id])
+  tags        ArticleTag[]
+  authors     ArticleAuthor[]
+}
+
+model Tag {
+  id       String       @id @default(cuid())
+  name     String       @unique
+  articles ArticleTag[]
+}
+
+model ArticleTag {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+}
+
+model ArticleAuthor {
+  id        String  @id @default(cuid())
+  name      String
+  position  Int     @default(0)
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
 }

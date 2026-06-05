@@ -1,6 +1,6 @@
 'use client'
 
-import { Article } from '@/lib/articles-data'
+import { ArticleDB } from '@/lib/articles-db'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Calendar, User, Eye, Download, Quote, Tag } from 'lucide-react'
@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer'
 import { getTagColor } from '@/lib/tag-colors'
 
 interface ArticleCardProps {
-  article: Article
+  article: ArticleDB
 }
 
 export default function ArticleCard({ article }: ArticleCardProps) {
@@ -46,7 +46,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           <div className="p-6">
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">
-              {article?.tags?.slice(0, 2)?.map((tag) => {
+              {article?.tags?.slice(0, 2)?.map((tag: string) => {
                 const colors = getTagColor(tag ?? '')
                 return (
                   <span

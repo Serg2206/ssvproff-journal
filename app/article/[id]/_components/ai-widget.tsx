@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Article } from '@/lib/articles-data'
+import { ArticleDB } from '@/lib/articles-db'
 import { Bot, FileText, MessageSquare, Sparkles, X, Loader2, Zap, Edit, Compass, BarChart3 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { sendGAEvent } from '@next/third-parties/google'
 
 interface AIWidgetProps {
-  article: Article
+  article: ArticleDB
 }
 
 type AIMode = 'case-analysis' | 'response-generator' | 'chatbot' | 'editor' | 'navigator' | 'methodologist' | null

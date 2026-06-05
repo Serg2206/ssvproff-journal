@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import { Space_Grotesk, Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import Link from 'next/link'
-import { Stethoscope } from 'lucide-react'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import Header from '@/components/header'
+import AuthProvider from '@/components/session-provider'
+import { Stethoscope } from 'lucide-react'
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ['latin'],
@@ -18,8 +19,6 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap'
 })
-
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'SSVproff - Профессиональный хирургический журнал',
@@ -44,77 +43,14 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning className={`${spaceGrotesk.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
+        <AuthProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
           disableTransitionOnChange
         >
-          {/* Header */}
-          <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-gray-200">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex h-16 items-center justify-between">
-                {/* Logo */}
-                <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-                  <Stethoscope className="h-8 w-8 text-[#1a73e8]" />
-                  <div className="flex items-baseline">
-                    <span className="text-2xl font-bold text-[#1a73e8]" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                      SSV
-                    </span>
-                    <span className="text-xl text-[#202124]" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                      proff
-                    </span>
-                  </div>
-                </Link>
-                
-                {/* Navigation */}
-                <nav className="hidden md:flex items-center space-x-1">
-                  <Link 
-                    href="/" 
-                    className="px-4 py-2 rounded-md text-sm font-medium text-[#202124] hover:bg-[#f8f9fa] transition-colors"
-                  >
-                    Главная
-                  </Link>
-                  <Link 
-                    href="/archive" 
-                    className="px-4 py-2 rounded-md text-sm font-medium text-[#202124] hover:bg-[#f8f9fa] transition-colors"
-                  >
-                    Архив
-                  </Link>
-                  <Link 
-                    href="/for-authors" 
-                    className="px-4 py-2 rounded-md text-sm font-medium text-[#202124] hover:bg-[#f8f9fa] transition-colors"
-                  >
-                    Для авторов
-                  </Link>
-                  <Link 
-                    href="/for-reviewers" 
-                    className="px-4 py-2 rounded-md text-sm font-medium text-[#202124] hover:bg-[#f8f9fa] transition-colors"
-                  >
-                    Для рецензентов
-                  </Link>
-                  <Link 
-                    href="/ai-policy" 
-                    className="px-4 py-2 rounded-md text-sm font-medium text-[#202124] hover:bg-[#f8f9fa] transition-colors"
-                  >
-                    Политика ИИ
-                  </Link>
-                  <Link 
-                    href="/editor-profile" 
-                    className="px-4 py-2 rounded-md text-sm font-medium text-[#202124] hover:bg-[#f8f9fa] transition-colors"
-                  >
-                    Редактор
-                  </Link>
-                  <Link 
-                    href="/about" 
-                    className="px-4 py-2 rounded-md text-sm font-medium text-[#202124] hover:bg-[#f8f9fa] transition-colors"
-                  >
-                    О журнале
-                  </Link>
-                </nav>
-              </div>
-            </div>
-          </header>
+          <Header />
 
           {/* Main Content */}
           <main className="min-h-screen">
@@ -153,6 +89,7 @@ export default function RootLayout({
             </div>
           </footer>
         </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   )
