@@ -73,6 +73,8 @@ The project already includes a Vercel config in [vercel.json](vercel.json).
 
 GitHub Actions workflow is configured in [.github/workflows/ci.yml](.github/workflows/ci.yml).
 
+For production deployment, use the template in [.env.production.example](.env.production.example) and the deployment guide in [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
+
 ## Project structure
 
 ```text
