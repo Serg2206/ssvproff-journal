@@ -1,4 +1,4 @@
-import { getArticleById, getRelatedArticles, getAllArticles } from '@/lib/articles-db'
+import { getArticleById, getRelatedArticles, getAllArticles, type ArticleDB } from '@/lib/articles-db'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { Calendar, User, Building2, Eye, Download, Quote, FileText, Tag, Printer } from 'lucide-react'
@@ -11,7 +11,7 @@ import { getTagColor } from '@/lib/tag-colors'
 
 export async function generateStaticParams() {
   const articles = await getAllArticles()
-  return articles.map((article) => ({ id: article.id }))
+  return articles.map((article: { id: string }) => ({ id: article.id }))
 }
 
 interface ArticlePageProps {
@@ -176,7 +176,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             Похожие статьи
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedArticles.map((relatedArticle) => (
+            {relatedArticles.map((relatedArticle: ArticleDB) => (
               <ArticleCard key={relatedArticle.id} article={relatedArticle} />
             ))}
           </div>

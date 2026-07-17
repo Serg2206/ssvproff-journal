@@ -1,4 +1,4 @@
-import { getLatestArticles } from '@/lib/articles-db'
+import { getLatestArticles, type ArticleDB } from '@/lib/articles-db'
 import ArticleCard from '@/components/article-card'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -25,7 +25,7 @@ export default async function Home() {
 
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {latestArticles.map((article) => (
+          {latestArticles.map((article: ArticleDB) => (
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>

@@ -51,7 +51,7 @@ export async function getRelatedArticles(currentId: string, count = 3) {
   })
   if (!current) return []
 
-  const tagIds = current.tags.map((t) => t.tagId)
+  const tagIds = current.tags.map((t: { tagId: string }) => t.tagId)
 
   const raw = await prisma.article.findMany({
     where: {
@@ -65,7 +65,7 @@ export async function getRelatedArticles(currentId: string, count = 3) {
   })
 
   if (raw.length < count) {
-    const existingIds = [currentId, ...raw.map((a) => a.id)]
+    const existingIds = [currentId, ...raw.map((a: { id: string }) => a.id)]
     const additional = await prisma.article.findMany({
       where: { id: { notIn: existingIds }, published: true },
       include: articleInclude,
@@ -89,7 +89,7 @@ export async function getAllArticles() {
 
 export async function getAllTags() {
   const tags = await prisma.tag.findMany({ orderBy: { name: 'asc' } })
-  return tags.map((t) => t.name)
+  return tags.map((t: { name: string }) => t.name)
 }
 
 export async function filterArticles({
