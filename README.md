@@ -1,191 +1,101 @@
-# SSVproff - Современный медицинский журнал
+# SSVproff Journal
 
-![SSVproff Banner](./public/hero-banner.jpg)
+Modern medical journal with AI-assisted editorial tools, built with Next.js, TypeScript, Prisma, and Tailwind CSS.
 
-## 🏥 О проекте
+## Overview
 
-**SSVproff** — профессиональный медицинский журнал, специализирующийся на хирургии, научных исследованиях и интеграции искусственного интеллекта в медицине.
+SSVproff is a professional medical publishing platform focused on surgery, scientific research, and AI-enabled editorial workflows.
 
-**Слоган:** *"Ваш навигатор в мировой хирургии"*
+## Features
 
-## ✨ Особенности
+- Modern responsive UI
+- AI-assisted article analysis and chatbot workflows
+- Editorial and research-oriented content structure
+- Prisma-backed data layer with SQLite for local development
+- Ready for Vercel deployment with CI checks
 
-- 🎨 **Современный дизайн** с минималистичным интерфейсом
-- 🤖 **AI-интеграция** — 6 режимов искусственного интеллекта для анализа статей:
-  - Редакторский анализ
-  - Навигатор по мировой хирургии
-  - Методологический анализ
-  - Анализ клинических случаев
-  - Генератор ответов
-  - Интерактивный чатбот
-- 📱 **Адаптивный дизайн** — работает на всех устройствах
-- 🔍 **Умный поиск** с фильтрацией по категориям и тегам
-- 📊 **Google Analytics** для аналитики посещений
-- 🎯 **Цветовое кодирование** тегов и категорий
-- 🏆 **Профиль главного редактора** с академическими достижениями
+## Tech stack
 
-## 🛠 Технологии
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Prisma ORM
+- NextAuth-compatible architecture
+- Vercel deployment support
 
-- **Next.js 14** — React фреймворк
-- **TypeScript** — типизация
-- **Tailwind CSS** — стилизация
-- **Framer Motion** — анимации
-- **Prisma** — ORM для базы данных
-- **Abacus AI API** — интеграция LLM моделей
-- **shadcn/ui** — библиотека UI компонентов
+## Requirements
 
-## 📦 Установка
-
-### Требования
-
-- Node.js 18+ 
-- Yarn
+- Node.js 20+
+- npm
 - Git
 
-### Шаги установки
-
-1. **Клонируйте репозиторий:**
+## Local development
 
 ```bash
 git clone https://github.com/Serg2206/ssvproff-journal.git
 cd ssvproff-journal
+npm install
+cp .env.example .env
+npx prisma generate
+npx prisma db push
+npx prisma db seed
+npm run dev
 ```
 
-2. **Установите зависимости:**
+Open http://localhost:3000.
 
-```bash
-yarn install
-```
+## Environment variables
 
-3. **Настройте переменные окружения:**
-
-Создайте файл `.env` в корне проекта:
+Create a local .env file with:
 
 ```env
-# Google Analytics
+DATABASE_URL="file:./dev.db"
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=change-me
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-
-# Abacus AI API (для AI-функций)
-ABACUSAI_API_KEY=your_api_key_here
-
-# Database (если используете)
-DATABASE_URL="postgresql://..."
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+ABACUSAI_API_KEY=demo-key
 ```
 
-4. **Запустите проект локально:**
+## Deployment
+
+### Vercel
+
+1. Import the repository in Vercel
+2. Set the framework to Next.js
+3. Add environment variables in Vercel Project Settings
+4. Deploy
+
+The project already includes a Vercel config in [vercel.json](vercel.json).
+
+### CI/CD
+
+GitHub Actions workflow is configured in [.github/workflows/ci.yml](.github/workflows/ci.yml).
+
+## Project structure
+
+```text
+app/                # App router pages and API routes
+components/         # Reusable UI components
+lib/                # Data access and helpers
+prisma/             # Prisma schema and migrations
+public/             # Static assets
+scripts/            # Seed and utility scripts
+```
+
+## Quality checks
+
+Run before opening a PR:
 
 ```bash
-yarn dev
+npm run build
 ```
 
-Откройте [http://localhost:3000](http://localhost:3000) в браузере.
+## Contributing
 
-## 🚀 Деплой
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Проект развернут на **Abacus.AI**: [https://ssvproff-journal.abacusai.app](https://ssvproff-journal.abacusai.app)
+## License
 
-### Деплой на Vercel
-
-```bash
-vercel
-```
-
-### Деплой на другие платформы
-
-Проект совместим с любыми платформами, поддерживающими Next.js:
-- Netlify
-- AWS Amplify
-- Railway
-- Render
-
-## 📁 Структура проекта
-
-```
-ssvproff-journal/
-├── app/
-│   ├── about/              # О журнале
-│   ├── ai-policy/          # Политика использования AI
-│   ├── api/                # API endpoints для AI
-│   ├── archive/            # Архив публикаций
-│   ├── article/[id]/       # Страницы статей
-│   ├── editor-profile/     # Профиль главного редактора
-│   ├── for-authors/        # Для авторов
-│   ├── for-reviewers/      # Для рецензентов
-│   ├── layout.tsx          # Основной layout
-│   └── page.tsx            # Главная страница
-├── components/
-│   ├── ui/                 # UI компоненты (shadcn/ui)
-│   ├── article-card.tsx    # Карточка статьи
-│   └── theme-provider.tsx  # Провайдер темы
-├── lib/
-│   ├── articles-data.ts    # Данные статей
-│   ├── tag-colors.ts       # Цветовая схема тегов
-│   ├── types.ts            # TypeScript типы
-│   └── utils.ts            # Утилиты
-├── public/
-│   ├── hero-banner.jpg     # Баннер главной страницы
-│   ├── favicon.svg         # Иконка сайта
-│   └── og-image.png        # Open Graph изображение
-└── prisma/
-    └── schema.prisma       # Схема базы данных
-```
-
-## 🎨 Цветовая палитра
-
-- **Основной синий:** `#1a73e8`
-- **Зеленый акцент:** `#34a853`
-- **Красный дополнительный:** `#ea4335`
-- **Светлый фон:** `#f8f9fa`
-- **Текст:** `#202124`
-
-## 📝 Контент
-
-### Категории статей
-
-- **Наука и исследования** — фундаментальные и прикладные исследования
-- **Клиническая практика** — клинические случаи и протоколы лечения
-- **Технологии и инновации** — новые технологии в хирургии
-- **Образование** — методические материалы и обучение
-- **Обсуждения и дискуссии** — дискуссионные темы
-- **Обзоры статей** — анализ публикаций из ведущих журналов
-
-## 👨‍⚕️ Главный редактор
-
-**Сушков Сергей Валентинович**
-- Доктор медицинских наук, профессор
-- Харьковский национальный медицинский университет
-- 121 публикация, 18 патентов, h-index: 6
-
-## 📊 Google Analytics
-
-Для отслеживания активности пользователей интегрирован Google Analytics 4.
-
-Отслеживаемые события:
-- Просмотры статей
-- Выбор режимов AI
-- Отправка сообщений в чат
-- Использование фильтров поиска
-
-## 🤝 Участие в разработке
-
-Приветствуем вклад в развитие проекта!
-
-1. Форкните репозиторий
-2. Создайте ветку для функции (`git checkout -b feature/AmazingFeature`)
-3. Закоммитьте изменения (`git commit -m 'Add some AmazingFeature'`)
-4. Запушьте в ветку (`git push origin feature/AmazingFeature`)
-5. Откройте Pull Request
-
-## 📄 Лицензия
-
-Этот проект предназначен для академических и образовательных целей.
-
-## 📧 Контакты
-
-- **Email:** editor@ssvproff.com
-- **GitHub:** [@Serg2206](https://github.com/Serg2206)
-- **Сайт:** [https://ssvproff-journal.abacusai.app](https://ssvproff-journal.abacusai.app)
-
----
-
-**Создано с ❤️ для медицинского сообщества**
+See [LICENSE](LICENSE).
